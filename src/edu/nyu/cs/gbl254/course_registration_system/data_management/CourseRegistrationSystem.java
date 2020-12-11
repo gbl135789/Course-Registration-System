@@ -45,13 +45,7 @@ public class CourseRegistrationSystem {
 					// try to read the serialized file
 					CourseRegistrationSystem.readSerialized();
 				}
-				catch(IOException ioe) {
-					
-					// read the CSV
-					CourseRegistrationSystem.readCSV();
-					CourseRegistrationSystem.addAdmin("Admin", "Admin001", "Admin", "Test");
-				}
-				catch(ClassNotFoundException cnfe) {
+				catch(IOException | ClassNotFoundException e) {
 					
 					// read the CSV
 					CourseRegistrationSystem.readCSV();
@@ -66,8 +60,7 @@ public class CourseRegistrationSystem {
 	
 	// reads the CSV file
 	public static void readCSV() {
-		try {
-			Scanner sc = new Scanner(new File("MyUniversityCourses.csv"));
+		try (Scanner sc = new Scanner(new File("MyUniversityCourses.csv"))) {
 			
 			// skip header row
 			sc.nextLine();
@@ -76,7 +69,6 @@ public class CourseRegistrationSystem {
 				String[] courseData = line.split(",");
 				CourseRegistrationSystem.addCourse(new Course(courseData));
 			}
-			sc.close();
 		}
 		catch(FileNotFoundException fnfe) {
 			System.out.println("File not found.");
@@ -92,36 +84,30 @@ public class CourseRegistrationSystem {
 	@SuppressWarnings("unchecked")
 	// reads the serialized data
 	public static void readSerialized() throws IOException, ClassNotFoundException {
-		try {
-			FileInputStream fis = new FileInputStream("serialized.ser");
-			ObjectInputStream ois = new ObjectInputStream(fis);
+		try (FileInputStream fis = new FileInputStream("serialized.ser");
+		ObjectInputStream ois = new ObjectInputStream(fis);) {
+
 			CourseRegistrationSystem.courses = (ArrayList<Course>) ois.readObject();
 			CourseRegistrationSystem.users = (ArrayList<User>) ois.readObject();
-			ois.close();
-			fis.close();
 		}
 		catch(IOException ioe) {
-			//ioe.printStackTrace();
 			throw ioe;
 		}
 		catch(ClassNotFoundException cnfe) {
-			//cnfe.printStackTrace();
 			throw cnfe;
 		}
 	}
 	
 	// serializes the data
 	public static void serialize() {
-		try {
-			FileOutputStream fos = new FileOutputStream("serialized.ser");
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
+		try (FileOutputStream fos = new FileOutputStream("serialized.ser");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+
 			oos.writeObject(CourseRegistrationSystem.courses);
 			oos.writeObject(CourseRegistrationSystem.users);
-			oos.close();
-			fos.close();
 		}
 		catch(IOException ioe) {
-			//ioe.printStackTrace();
+			ioe.printStackTrace();
 		}
 	}
 	
