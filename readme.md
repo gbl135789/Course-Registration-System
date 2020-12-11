@@ -1,6 +1,8 @@
-Author: Garrett Lu
-Description:
-This is a simple course registration system created with the Java language, while following the object oriented programming paradigm. The graphical user interface was created with Swing.
+Garrett Lu  
+Data Structures  
+Spring 2019
+
+Description: This is a simple course registration system created with the Java language, while following the object oriented programming paradigm. The graphical user interface was created with Swing.
 
 How to run:
 1. Import project folder into Eclipse or other IDE
@@ -11,7 +13,6 @@ Program flow:
 1. The main method is located within the CourseRegistrationSystem class. The program will first try to read a serialized file storing the ArrayLists of courses and students. If unsuccessful, it will read from a CSV containing course data.
 2. After reading the data, a LoginPage is instantiated, allowing the user to log in.
 3. After logging in, a StudentDashboard or AdminDashboard is instantiated, depending on user account type. Both dashboards have an “exit” button, which causes the system to terminate.
-
 
 If the user is a student:
 1. If the current user is a student and it is his/her first time logging in, he/she will be prompted to set a new username and password. After that is done, the student dashboard will show.
